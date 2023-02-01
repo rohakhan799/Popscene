@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Movie App</string>
+    <string name="stay_fresh_view_fresh">Stay Fresh, View Fresh</string>
+    <string name="explore">Explore!!!</string>
+    <string name="music_app">\@string/music_app</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="let_s_have_a_look">Let\'s Have A Look!!!</string>
+    <string name="movie1">Movie1</string>
+    <string name="movie2">Movie2</string>
+    <string name="Popscene">popscene</string>
+    <string name="todo">TODO</string>
+    <string name="watch_a_mov">Watch a movie with the easiest way</string>
+    <string name="watch_mov2">Go ahead, explore favourite genre and watch the movie, chill and enjoy.</string>
+    <string name="next">Next</string>
+    <string name="watch_on_any_device">Watch on any device</string>
+    <string name="stream_on_your">Stream on your phone, tablet, laptop or smart tv in one package</string>
+    <string name="watch_the_movie_offline">Watch the movie offline</string>
+    <string name="download_and">Download and enjoy. Save your data, watch offline on a unusual locations in the world</string>
+    <string name="next_frag1">Next</string>
+</resources>
