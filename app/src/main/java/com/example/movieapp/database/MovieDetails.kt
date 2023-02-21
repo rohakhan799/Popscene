@@ -14,9 +14,4 @@ data class MovieDetails(
     var movieDesc: String?,
     var movieCast: String?,
     val coverImageUrl: String?,
-
-/*    var voteCount: Int,
-    var moviePlot: String,
-    val downloadMov: Boolean,
-    val playMovie: Boolean*/
 ) : Parcelable
