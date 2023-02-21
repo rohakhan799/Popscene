@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
-import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.database.MovieDetails
 import com.example.movieapp.model.UserManager
 import com.example.movieapp.viewholder.BookmarkViewHolder
 import com.example.movieapp.viewholder.HomeViewHolder

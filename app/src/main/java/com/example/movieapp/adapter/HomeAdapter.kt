@@ -1,7 +1,7 @@
 package com.example.movieapp.adapter
 
 import android.widget.ImageView
-import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.database.MovieDetails
 
 class HomeAdapter(
     dataset: List<MovieDetails>,

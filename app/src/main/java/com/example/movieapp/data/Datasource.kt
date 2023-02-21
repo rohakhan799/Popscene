@@ -1,6 +1,6 @@
 package com.example.movieapp.data
 
-import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.database.MovieDetails
 
 public class Datasource {
 

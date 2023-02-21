@@ -14,7 +14,7 @@ import coil.api.load
 import com.example.movieapp.adapter.MoviesAdapter
 import com.example.movieapp.data.Datasource
 import com.example.movieapp.databinding.ActivityMovieDetailBinding
-import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.database.MovieDetails
 import com.example.movieapp.model.UserManager
 
 class MovieDetailActivity : AppCompatActivity() {

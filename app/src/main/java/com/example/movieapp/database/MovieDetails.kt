@@ -1,4 +1,4 @@
-package com.example.movieapp.model
+package com.example.movieapp.database
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
