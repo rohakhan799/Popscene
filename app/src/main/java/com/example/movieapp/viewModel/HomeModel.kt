@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.Datasource
-import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.database.MovieDetails
 import kotlinx.coroutines.launch
 
 class HomeModel : ViewModel() {
