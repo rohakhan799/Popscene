@@ -18,4 +18,66 @@
     <string name="watch_the_movie_offline">Watch the movie offline</string>
     <string name="download_and">Download and enjoy. Save your data, watch offline on a unusual locations in the world</string>
     <string name="next_frag1">Next</string>
+    <string name="Recommend1">The Lost City (2022)</string>
+    <string name="Recommend2">Mon (2022)</string>
+    <string name="Recommend3">The Bob\'s Burger Movie (2019)</string>
+    <string name="Recommend4">Scream (2022)</string>
+    <string name="Recommend5">The lion King (1984)</string>
+    <string name="Trend1">The Lion King2 (1998)</string>
+    <string name="Trend2">The Lion King3 (2004)</string>
+    <string name="Trend3">The Lion King (2019)</string>
+    <string name="Trend4">The Lion King (1987)</string>
+    <string name="recommended_movies">Recommended Movies</string>
+    <string name="imdb1">IMDB 6.1/10</string>
+    <string name="imdb2">IMDB 6.3/10</string>
+    <string name="imdb3">IMDB 5.1/10</string>
+    <string name="imdb4">IMDB 9.1/10 </string>
+    <string name="imdb5">IMDB 3.1/10 </string>
+    <string name="imdb6">IMDB 3.1/10 </string>
+    <string name="imdb7">IMDB 4.1/10 </string>
+    <string name="imdb8">IMDB 5.1/10 </string>
+    <string name="imdb9">IMDB 8.1/10 </string>
+    <string name="imdb10">IMDB 6.7/10 </string>
+
+    <string name="genre1">Action</string>
+    <string name="genre2">Drama</string>
+    <string name="genre3">Comedy</string>
+    <string name="genre4">Comedy, Action</string>
+    <string name="genre5">Comedy, Action</string>
+    <string name="genre6">Adventure,Action</string>
+    <string name="genre7">Drama</string>
+    <string name="genre8">Action</string>
+    <string name="genre9">Comedy, Action </string>
+    <string name="genre10">Adventure</string>
+
+    <string name="time1">2h 54m</string>
+    <string name="time2">1h 54m</string>
+    <string name="time3">3h 54m</string>
+    <string name="time4">2h 12m</string>
+    <string name="time5">1h 4m</string>
+    <string name="time6">3h 4m</string>
+    <string name="time7">1h 24m</string>
+    <string name="time8">2h 54m</string>
+    <string name="time9">2h 34m</string>
+    <string name="time10">3h 34m</string>
+    <string name="recommended_for_you">Recommended For You</string>
+
+    <string name="cast1">Matthew Broderick, Jeremy Irons, James Earl Jones</string>
+    <string name="cast2">Matthew Broderick, Neve Campbell, Andy Dick</string>
+    <string name="cast3">Nathan Lane, Ernie Sabella, Julie K</string>
+    <string name="cast4">Ernie Sabella, Julie K</string>
+    <string name="cast5">Jeremy Irons, James Earl Jones</string>
+    <string name="cast6">Donald Glover, Beyonce,Seth Rogen</string>
+    <string name="cast7">Jeremy Irons,Nathan Lane</string>
+    <string name="cast8">Nathan Lane,Matthew Broderick</string>
+    <string name="cast9">Nathan Lane, Ernie Sabella</string>
+    <string name="cast10">Beyonce,Seth Rogen,Jeremy Irons</string>
+
+
+    <string name="Trend_Desc1">A reclusive romance novelist on a book tour with her cover model gets swept up in a
+        kidnapping attempt that lands them both in a cutthroat jungle adventure.</string>
+    <string name="Details">Details</string>
+    <string name="account">Account</string>
+
+
 </resources>

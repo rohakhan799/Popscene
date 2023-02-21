@@ -8,7 +8,7 @@
     android:background="#FFFFFF"
     tools:context=".Welcome">
 
-    <adapter.CustomViewPager
+    <com.example.movieapp.adapter.CustomViewPager
         android:id="@+id/idViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"

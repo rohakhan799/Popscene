@@ -1,12 +1,12 @@
 package com.example.movieapp
 
-import adapter.CustomViewPager
+import com.example.movieapp.adapter.CustomViewPager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.movieapp.data.Datasource
 import com.example.movieapp.databinding.ActivityWelcomeBinding
-import data.Datasource
 
 class Welcome : AppCompatActivity() {
     lateinit var viewPager: CustomViewPager
