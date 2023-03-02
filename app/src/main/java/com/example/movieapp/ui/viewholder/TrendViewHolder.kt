@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.movieapp.R
 import com.example.movieapp.model.GenreDetails
-import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.database.MovieDetails
 import com.example.movieapp.model.UserManager
 
 open class TrendViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
