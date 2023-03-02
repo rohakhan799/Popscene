@@ -47,6 +47,7 @@
             android:layout_marginTop="12dp"
             android:src="@drawable/icon2"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/item_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_icon1"
             tools:ignore="ExtraText" />
@@ -102,6 +103,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/quicksand_medium"
+            android:includeFontPadding="false"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/img_icon2"

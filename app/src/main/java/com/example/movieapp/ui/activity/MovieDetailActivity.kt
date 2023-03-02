@@ -1,0 +1,111 @@
+package com.example.movieapp.ui.activity
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
+import com.example.movieapp.R
+import com.example.movieapp.databinding.ActivityMovieDetailBinding
+import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.model.UserManager
+import com.example.movieapp.ui.adapter.MoviesAdapter
+import com.example.movieapp.ui.fragment.HomeFragment
+import com.example.movieapp.viewModel.MoviesViewModel
+
+class MovieDetailActivity : AppCompatActivity() {
+    @SuppressLint("ResourceType")
+     var movie: MovieDetails?=null
+    lateinit var movieViewModel:MoviesViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        movieViewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
+        movieViewModel.init(this.application)
+        movieViewModel.fetchAllMovies()
+        movieViewModel.fetchRecommendedMovies()
+        movieViewModel.fetchTrendingMovies()
+
+        var textViewTime: TextView = binding.timeDetails
+        var textViewGenre: TextView = binding.genreDetails
+        var imageView: ImageView = binding.titleImg
+
+        movie = intent.getParcelableExtra<MovieDetails>(HomeFragment.INTENT_PARCELABLE)
+        val bundle: Bundle? = intent.extras
+        if (movie != null) {
+            imageView.load(movie?.coverImageUrl)
+        }
+        if (movie != null) {
+            binding.titleDetails.text = movie?.movieTitle
+        }
+        if (movie != null) {
+            binding.imdbDetails.text = movie?.movieRating.toString()
+        }
+        if (movie != null) {
+            textViewTime.text = movie?.movieDuration.toString()
+        }
+        if (movie != null) {
+            textViewGenre.text = movie?.genreId
+        }
+        if (movie != null) {
+            binding.descDetails.text = movie?.movieDesc
+        }
+        imageView.transitionName = movie?.movieTitle
+
+        val myDataset_trend = movieViewModel.allMovies
+        val recyclerViewtrend: RecyclerView = findViewById(R.id.recycler_view_details)
+        recyclerViewtrend.setHasFixedSize(true)
+
+        recyclerViewtrend.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewtrend.adapter = MoviesAdapter(myDataset_trend, listener = { movie, image ->
+            val intent2: Intent = Intent(this, MovieDetailActivity::class.java)
+            intent2.putExtra(HomeFragment.INTENT_PARCELABLE, movie)
+            intent2.putExtra("Shared Trend Image", ViewCompat.getTransitionName(image));
+            val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                image,
+                ViewCompat.getTransitionName(image)!!
+            )
+            startActivityForResult(intent2, 1, options.toBundle())
+        }, onBookmarkClick = {},2 )
+
+        var imageButton: ImageView = findViewById(R.id.bookmark)
+        if (UserManager.bookmarkList.contains(movie)) {
+            imageButton.setImageResource(R.drawable.bookmark2)
+        } else {
+            imageButton.setImageResource(R.drawable.bookmark)
+        }
+        val resultIntent = Intent()
+
+        imageButton.setOnClickListener {
+            if (movie != null) {
+                //TODO: Check if already exists and remove if it does
+                if ((!UserManager.bookmarkList.contains(movie))) {
+                    UserManager.bookmarkList.add(movie!!)
+                    imageButton.setImageResource(R.drawable.bookmark2)
+                } else {
+                    UserManager.bookmarkList.remove(movie)
+                    imageButton.setImageResource(R.drawable.bookmark)
+                }
+                resultIntent.putExtra("result", movie)
+                setResult(RESULT_OK, resultIntent)
+
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (movie != null) {
+        }
+        super.onBackPressed()
+    }
+}

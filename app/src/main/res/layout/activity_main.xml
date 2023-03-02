@@ -8,7 +8,7 @@
     android:background="#000000"
     android:backgroundTintMode="screen"
     android:foregroundTint="#2BD1C1"
-    tools:context=".MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
 
     <ImageView

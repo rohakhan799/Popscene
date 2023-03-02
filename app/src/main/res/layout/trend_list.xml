@@ -103,6 +103,7 @@
             android:fontFamily="@font/quicksand_medium"
             android:textColor="#7A7768"
             android:textSize="18sp"
+            android:includeFontPadding="false"
             app:layout_constraintBottom_toBottomOf="@+id/img_icon2_trend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_icon2_trend"
