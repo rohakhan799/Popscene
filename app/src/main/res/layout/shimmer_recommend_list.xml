@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardShimmerView"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    tools:ignore="ExtraText">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/item_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:background="@color/grey"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ExtraText" />
+
+        <View
+            android:id="@+id/img_icon1"
+            android:layout_width="24dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="5dp"
+            android:background="@color/grey"
+            android:layout_marginTop="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_title"
+            tools:ignore="ExtraText" />
+
+
+        <View
+            android:id="@+id/img_icon2"
+            android:layout_width="27dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="5dp"
+            android:background="@color/grey"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/item_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_icon1"
+            tools:ignore="ExtraText" />
+
+        <View
+            android:id="@+id/img_icon3"
+            android:layout_width="25dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="5dp"
+            android:background="@color/grey"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_icon2"
+            tools:ignore="ExtraText" />
+
+
+        <View
+            android:id="@+id/item_title"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton_bookmark"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_image"
+            tools:ignore="ExtraText" />
+
+        <View
+            android:id="@+id/item_imdb"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/img_icon1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_icon1"
+            app:layout_constraintTop_toTopOf="@+id/img_icon1"
+            tools:ignore="ExtraText" />
+
+        <View
+            android:id="@+id/item_time"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/img_icon2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_icon2"
+            app:layout_constraintTop_toTopOf="@+id/img_icon2" />
+
+        <View
+            android:id="@+id/item_genre"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/img_icon3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_icon3"
+            app:layout_constraintTop_toTopOf="@+id/img_icon3" />
+
+        <View
+            android:id="@+id/imageButton_bookmark_shimmer"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_image"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

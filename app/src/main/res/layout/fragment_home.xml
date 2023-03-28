@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.activity.MainActivity"
     tools:ignore="ExtraText">
 
     <androidx.core.widget.NestedScrollView
@@ -21,7 +21,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintGuide_percent="0.5"
             tools:ignore="ExtraText">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -34,17 +33,27 @@
 
             <TextView
                 android:id="@+id/textView_recommend"
+                style="@style/testHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/quicksand_bold"
                 android:text="@string/recommended_for_you"
                 android:textAlignment="textStart"
-                style="@style/testHeader"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerview"
                 tools:ignore="MissingConstraints" />
+
+            <include
+                android:id="@+id/shimmer_recommend"
+                layout="@layout/shimmer_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_view_recommend"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recycler_view_recommend" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_recommend"
@@ -56,9 +65,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_recommend"
-                tools:ignore="MissingConstraints">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:ignore="MissingConstraints"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/textView_trend"
