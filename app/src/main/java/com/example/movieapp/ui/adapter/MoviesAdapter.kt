@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.model.MovieDetails
-import com.example.movieapp.model.UserManager
+import com.example.movieapp.model.UserDetails
 import com.example.movieapp.ui.viewholder.BookmarkViewHolder
 import com.example.movieapp.ui.viewholder.HomeViewHolder
 import com.example.movieapp.ui.viewholder.RecommendedViewHolder
@@ -18,6 +18,7 @@ open class MoviesAdapter(
     val onBookmarkClick: (MovieDetails) -> Unit,
     val itemType: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var userList = ArrayList<UserDetails>()
 
     companion object {
         const val VIEW_TYPE_RECOMMENDED = 1
@@ -52,33 +53,13 @@ open class MoviesAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is RecommendedViewHolder) {
-            (holder as RecommendedViewHolder).bindView(dataset[position], listener) { movie ->
-                if (!UserManager.bookmarkList.contains(movie)) {
-                    UserManager.bookmarkList.add(movie)
-                } else {
-                    UserManager.bookmarkList.remove(movie)
-                }
-                notifyItemChanged(position)
-            }
+            (holder as RecommendedViewHolder).bindView(dataset[position], listener, onBookmarkClick)
         } else if (holder is HomeViewHolder) {
-            (holder as HomeViewHolder).bindView(dataset[position])
+            (holder as HomeViewHolder).bindView(dataset[position], listener)
         } else if (holder is BookmarkViewHolder) {
-            (holder as BookmarkViewHolder).bindView(dataset[position], listener) { movie ->
-                UserManager.bookmarkList.remove(dataset[position])
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, getItemCount());
-                onBookmarkClick(movie)
-            }
+            (holder as BookmarkViewHolder).bindView(dataset[position], listener,onBookmarkClick)
         } else {
-            (holder as TrendViewHolder).bindView(dataset[position], listener) { movie ->
-                if (!UserManager.bookmarkList.contains(movie)) {
-                    UserManager.bookmarkList.add(movie)
-
-                } else {
-                    UserManager.bookmarkList.remove(movie)
-                }
-                notifyItemChanged(position)
-            }
+            (holder as TrendViewHolder).bindView(dataset[position], listener, onBookmarkClick)
         }
     }
 
@@ -86,8 +67,13 @@ open class MoviesAdapter(
         return dataset.size
     }
 
-    fun updateData(movie:List<MovieDetails>){
-        dataset=movie
+    fun updateData(movie: List<MovieDetails>) {
+        dataset = movie
+        notifyDataSetChanged()
+    }
+
+    fun addUser(user: UserDetails) {
+        this.userList.add(user)
         notifyDataSetChanged()
     }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.movieapp.R
+import com.example.movieapp.model.GenreDetails
 import com.example.movieapp.model.MovieDetails
 import com.example.movieapp.model.UserManager
 
@@ -36,33 +37,27 @@ class RecommendedViewHolder(private val view: View) :
         textViewtitle.text = movie.movieTitle
         textViewImdb.text = movie.movieRating.toString()
         textViewTime.text = getDuration(movie.movieDuration)
-        textViewGenre.text = getGenre(movie.genreId)
+        textViewGenre.text = getGenre(movie.genres)
         ViewCompat.setTransitionName(imageVi, movie.movieTitle);
         itemView.setOnClickListener { listener(movie, imageView) }
-        //TODO: no need for setBookmark. Use contains logic
-        if (UserManager.bookmarkList.contains(movie)) {
+
+        var MovieIdObj: MovieDetails? =
+            UserManager.bookmarkList.find { it.movieTitle == movie.movieTitle }
+
+        if (MovieIdObj != null) {
             imageButton.setImageResource(R.drawable.bookmark2)
         } else {
             imageButton.setImageResource(R.drawable.bookmark)
         }
         imageButton.setOnClickListener {
             bookmarkListener(movie)
-            //TODO: Use method to call onBindViewHolder
         }
     }
 
-    fun getGenre(genreId: String): String {
-        var genreList = UserManager.genreMap
-        var GenreName: String = ""
-        for (genre in genreList) {
-            var genreIdArray = genreId.split(",").map { it.toInt() }
-            for (id in genreIdArray) {
-                if (id == genre.key) {
-                    GenreName = GenreName + " " + genre.value
-                }
-            }
+    fun getGenre(genres: List<GenreDetails>): String {
+        return genres.joinToString(", ") {
+            it.genreName
         }
-        return GenreName
     }
 
     fun getDuration(time: Long): String {

@@ -40,4 +40,9 @@ class HomeActivity : AppCompatActivity() {
         transaction.replace(R.id.flFragment, fragment)
         transaction.commit()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finish()
+    }
 }

@@ -1,66 +1,105 @@
 package com.example.movieapp.viewModel
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.data.database.MoviesDatabase
+import com.example.movieapp.model.BookMarkDetails
 import com.example.movieapp.model.MovieDetails
+import com.example.movieapp.model.UserManager
+import com.example.movieapp.repository.BookmarkRepository
 import com.example.movieapp.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class MoviesViewModel : ViewModel() {
+class MoviesViewModel @Inject constructor() : ViewModel() {
     var allMovies: List<MovieDetails>
     private var _allMoviesLiveData = MutableLiveData<List<MovieDetails>>()
     var allMoviesLiveData: LiveData<List<MovieDetails>> = _allMoviesLiveData
 
     var movieTrend: List<MovieDetails>
-    var mutable_dataTrend = MutableLiveData<List<MovieDetails>>()
-    var trendLiveData: LiveData<List<MovieDetails>> = mutable_dataTrend
+    var mutableDataTrend = MutableLiveData<List<MovieDetails>>()
+    var trendLiveData: LiveData<List<MovieDetails>> = mutableDataTrend
 
     var movieRecommend: List<MovieDetails>
-    var mutable_dataRecommend = MutableLiveData<List<MovieDetails>>()
-    var recommendLiveData: LiveData<List<MovieDetails>> = mutable_dataRecommend
+    var mutableDataRecommend = MutableLiveData<List<MovieDetails>>()
+    var recommendLiveData: LiveData<List<MovieDetails>> = mutableDataRecommend
 
+    var movieBookmark: ArrayList<BookMarkDetails>
+    var mutableBookmark = MutableLiveData<List<BookMarkDetails>>()
+    var bookmarkLiveData: LiveData<List<BookMarkDetails>> = mutableBookmark
+
+    var allBookmarkMovies: List<MovieDetails>
+    private var _allBookmarkMovies = MutableLiveData<List<MovieDetails>>()
+    var allBookmarkMoviesLiveData: LiveData<List<MovieDetails>> = _allBookmarkMovies
+
+    @Inject
     lateinit var movieRepo: MoviesRepository
+
+    @Inject
+    lateinit var bookmarkRepository: BookmarkRepository
 
     init {
         allMovies = emptyList()
+        allBookmarkMovies = emptyList()
+        movieBookmark = ArrayList()
         movieRecommend = emptyList()
         movieTrend = emptyList()
     }
 
-    fun init(application: Application) {
-        val moviesDao = MoviesDatabase.getDatabase(application).movieDao()
-        val genreDao = MoviesDatabase.getDatabase(application).genreDao()
-        movieRepo = MoviesRepository(moviesDao,genreDao)
+    suspend fun init() {
+        viewModelScope.launch {
+            movieRepo.loadGenres()
+            bookmarkRepository.loadBookmarks()
+        }
     }
 
-    fun fetchAllMovies() {
+    fun addBookmark(bookMark: BookMarkDetails) {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieBookmark.add(bookMark)
+            bookmarkRepository.addBookmark(bookMark)
+            //mutableBookmark.postValue(UserManager.userObj?.let { bookmarkRepository.getBookmark(it.userId) })
+            mutableBookmark.postValue(movieBookmark)
+        }
+    }
+
+    fun removeBookmark(userId: Int, movieId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            //movieBookmark.add(bookMark)
+            bookmarkRepository.removeBookmark(userId, movieId)
+            mutableBookmark.postValue(UserManager.userObj?.let { bookmarkRepository.getBookmark(it.userId) })
+        }
+    }
+
+    suspend fun fetchAllBookmarkMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            allBookmarkMovies = bookmarkRepository.getAllBookmarkMovies()
+            _allBookmarkMovies.postValue(allBookmarkMovies)
+        }
+    }
+
+    suspend fun fetchAllMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             allMovies = movieRepo.getAllMovies()
             _allMoviesLiveData.postValue(allMovies)
+            /*movieBookmark = UserManager.userObj?.let { bookmarkRepository.getBookmark(it.userId) }!!
+            mutableBookmark.postValue(movieBookmark)*/
         }
     }
 
-    fun fetchRecommendedMovies() {
+    suspend fun fetchRecommendedMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             movieRecommend = movieRepo.getRecommendMovies()
-            mutable_dataRecommend.postValue(movieRecommend)
+            mutableDataRecommend.postValue(movieRecommend)
         }
     }
 
-    fun fetchTrendingMovies() {
+    suspend fun fetchTrendingMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             movieTrend = movieRepo.getTrendMovies()
-            mutable_dataTrend.postValue(movieTrend)
+            mutableDataTrend.postValue(movieTrend)
         }
-    }
-
-    fun getAllWords(): LiveData<List<MovieDetails>> {
-        return allMoviesLiveData
     }
 }

@@ -13,5 +13,5 @@ interface GenreDao {
     suspend fun addGenre(genre: GenreDetails)
 
     @Query(value = "SELECT * FROM GenreDetails ORDER BY Id ASC ")
-    fun readGenre():List<GenreDetails>
+    suspend fun readGenre():List<GenreDetails>
 }

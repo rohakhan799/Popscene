@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.movieapp.R
 import com.example.movieapp.model.GenreDetails
-import com.example.movieapp.database.MovieDetails
+import com.example.movieapp.model.MovieDetails
 import com.example.movieapp.model.UserManager
 
 open class TrendViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -25,7 +25,7 @@ open class TrendViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
     fun bindView(
         movie: MovieDetails,
         listener: (MovieDetails, ImageView) -> Unit,
-        bookmarkListener: (MovieDetails) -> Unit
+        bookmarkListener: (MovieDetails) -> Unit,
     ) {
         var imageVi: ImageView = imageViewtrend.findViewById(R.id.item_image_trend);
         Glide.with(this.view)
@@ -43,7 +43,10 @@ open class TrendViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
 
         itemView.setOnClickListener { listener(movie, imageViewtrend) }
 
-        if (UserManager.bookmarkList.contains(movie)) {
+        var MovieIdObj: MovieDetails? =
+            UserManager.bookmarkList.find { it.movieTitle == movie.movieTitle }
+
+        if (MovieIdObj != null) {
             imageButton.setImageResource(R.drawable.bookmark2)
         } else {
             imageButton.setImageResource(R.drawable.bookmark)

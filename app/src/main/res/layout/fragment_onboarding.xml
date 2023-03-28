@@ -18,7 +18,6 @@
         android:textColor="#00629F"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_scene" />
 
@@ -33,7 +32,6 @@
         android:textColor="#7A7768"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_watch_mov" />
 
@@ -43,9 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:contentDescription="@string/todo"
-
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/imageryscene" />
@@ -66,5 +62,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_watch_mov2"
-        app:layout_constraintVertical_bias="1.0" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activity.MovieDetailActivity">
 
 
@@ -51,10 +52,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/quicksand_bold"
                 android:textColor="#171E00"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/bookmark"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleImg" />
 
@@ -64,13 +67,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/quicksand_medium"
                 android:text="IMDB"
                 android:textColor="#171E00"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bookmark"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/title_details"
                 app:layout_constraintVertical_bias="1.0" />
