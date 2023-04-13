@@ -1,3 +1,4 @@
+/*
 package com.example.movieapp.model
 
 import android.os.Parcelable
@@ -16,3 +17,4 @@ data class MovieAndTrend(
     )
     val trendID: TrendMovies
 ) : Parcelable
+*/

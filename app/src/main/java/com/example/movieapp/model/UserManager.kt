@@ -1,9 +1,9 @@
 package com.example.movieapp.model
 
 object UserManager {
-    val bookmarkList: ArrayList<MovieDetails> = ArrayList()
+    var bookmarkList: ArrayList<MovieDetails> = ArrayList()
     val bookmarkId: ArrayList<Int> = ArrayList()
-    val readGenre: ArrayList<GenreDetails> = ArrayList()
-    var genreMap: HashMap<Int, String> = HashMap()
+    var readGenre: ArrayList<GenreDetails> = ArrayList()
     var userObj: UserDetails? = null
+    var allMoviesData: ArrayList<MovieDetails> = ArrayList()
 }

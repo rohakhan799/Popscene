@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +15,13 @@ import kotlinx.coroutines.launch
 
 
 class LoginActivity : AppCompatActivity() {
+    var userValid: Boolean = false
+    private val CACHE_DURATION = 5 * 60 * 1000
+
     private val userViewModel: LoginViewModel by viewModels {
         (application as MyApplication).appComponent.viewModelsFactory()
     }
+
     lateinit var bindingData: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +46,18 @@ class LoginActivity : AppCompatActivity() {
 
         userViewModel.userObjLive.observe(this) { user ->
             if (user != null) {
-                var sharedPreferences: SharedPreferences? = null
-                sharedPreferences = getSharedPreferences("MyPref", AppCompatActivity.MODE_PRIVATE)
-                userViewModel.getSharedPreference(this, sharedPreferences)
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                var sharedPreferences: SharedPreferences? =
+                    getSharedPreferences("MyPref", AppCompatActivity.MODE_PRIVATE)
+                if (sharedPreferences != null) {
+                    userViewModel.getSharedPreference(this, sharedPreferences)
+                }
                 lifecycleScope.launch {
                     userViewModel.loadBookmarks()
                     userViewModel.loadGenres()
                 }
+            } else {
+                Toast.makeText(this, "User Not Found !!!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -71,6 +81,9 @@ class LoginActivity : AppCompatActivity() {
                 bindingData.email.text.toString(),
                 bindingData.password.text.toString()
             )
+            userValid = true
+        }
+        if (!userValid) {
         }
     }
 
@@ -85,6 +98,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        this.finish()
+        intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

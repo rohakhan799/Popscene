@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityHomeBinding
-import com.example.movieapp.ui.fragment.*
+import com.example.movieapp.ui.fragment.AccountFragment
+import com.example.movieapp.ui.fragment.BookmarkFragment
+import com.example.movieapp.ui.fragment.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -15,8 +17,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val homeFragment = HomeFragment()
-        val discoverFragment = DiscoverFragment()
-        val playedFragment = PlayedFragment()
         val accountFragment = AccountFragment()
         val bookmarkFragment = BookmarkFragment()
 
@@ -25,11 +25,8 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> setCurrentFragment(HomeFragment())
-                R.id.discover -> setCurrentFragment(discoverFragment)
-                R.id.played -> setCurrentFragment(playedFragment)
                 R.id.account -> setCurrentFragment(accountFragment)
                 R.id.bookmark -> setCurrentFragment(bookmarkFragment)
-
             }
             true
         }

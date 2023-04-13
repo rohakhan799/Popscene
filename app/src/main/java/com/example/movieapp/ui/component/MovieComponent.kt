@@ -4,12 +4,12 @@ import android.app.Activity
 import android.app.Application
 import com.example.movieapp.application.MyApplication
 import com.example.movieapp.data.modules.MoviesModule
+import com.example.movieapp.repository.MoviesRepository
 import com.example.movieapp.viewModel.MoviesViewModel
 import com.example.movieapp.viewModel.ViewModelFactory
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
-
 
 @Component(modules = [MoviesModule::class])
 @Singleton
@@ -18,9 +18,12 @@ interface MovieComponent {
 
     fun inject(activity: Activity)
 
-    fun viewModel():MoviesViewModel
+    fun viewModel(): MoviesViewModel
 
     fun viewModelsFactory(): ViewModelFactory
+
+    fun repository(): MoviesRepository
+
 
     @Component.Builder
     interface Builder {

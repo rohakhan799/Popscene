@@ -2,17 +2,19 @@ package com.example.movieapp.data.modules
 
 import android.app.Application
 import androidx.room.Room
+import com.example.movieapp.application.MyApplication
 import com.example.movieapp.data.dao.BookmarkDao
 import com.example.movieapp.data.dao.GenreDao
 import com.example.movieapp.data.dao.MoviesDao
 import com.example.movieapp.data.dao.UserDao
 import com.example.movieapp.data.database.MoviesDatabase
+import com.example.movieapp.repository.MoviesRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class MoviesModule{
+class MoviesModule {
     @Provides
     @Singleton
     fun getMoviesDatabase(application: Application): MoviesDatabase {
@@ -21,6 +23,7 @@ class MoviesModule{
             MoviesDatabase::class.java,
             name = "movies_database"
         ).createFromAsset("database/Movies.db")
+            .allowMainThreadQueries()
             .build()
     }
 
@@ -46,5 +49,15 @@ class MoviesModule{
     @Singleton
     fun getBookmarkDao(application: Application): BookmarkDao {
         return getMoviesDatabase(application).BookmarkDao()
+    }
+
+    @Provides
+    fun provideRepository(application: Application): MoviesRepository {
+        return MoviesRepository(
+            application as MyApplication,
+            getMoviesDao(application),
+            getGenreDao(application),
+            getMoviesDatabase(application)
+        )
     }
 }

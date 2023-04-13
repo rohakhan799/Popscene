@@ -6,16 +6,6 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/discover"
-        android:icon="@drawable/vectordiscover"
-
-        android:title="Discover" />
-    <item
-        android:id="@+id/played"
-        android:icon="@drawable/vectorplayed"
-
-        android:title="Played" />
-    <item
         android:id="@+id/bookmark"
         android:icon="@drawable/bookmark"
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.application.MyApplication
-import com.example.movieapp.model.MovieDetails
 import com.example.movieapp.model.UserManager
 import com.example.movieapp.ui.activity.MovieDetailActivity
 import com.example.movieapp.ui.adapter.MoviesAdapter
@@ -38,12 +38,17 @@ class BookmarkFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_bookmark, container, false)
-        //movieViewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
         lifecycleScope.launch {
             movieViewModel.init()
-            movieViewModel.fetchAllMovies()
             movieViewModel.fetchAllBookmarkMovies()
         }
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity!!.finish()
+                }
+            })
         return view
     }
 
@@ -69,21 +74,16 @@ class BookmarkFragment : Fragment() {
                 }, onBookmarkClick = { movie ->
                     if (UserManager.bookmarkList.isNotEmpty()) {
                         recyclerViewTest.visibility = RecyclerView.GONE
-                        var MovieIdObj: MovieDetails? = returnMovieObj(movie)
-                        UserManager.bookmarkList.remove(MovieIdObj)
-
-                        if (MovieIdObj != null) {
-                            removeBookmark(MovieIdObj.movieId)
-                        }
-                        movieViewModel.bookmarkLiveData.observe(viewLifecycleOwner) {
+                        UserManager.bookmarkList.remove(movie)
+                        UserManager.bookmarkId.remove(movie.movieId)
+                        removeBookmark(movie.movieId)
+                        movieViewModel.mutableBookmark.observe(viewLifecycleOwner) {
                             adapter.notifyDataSetChanged()
                         }
-
                     } else {
                         recyclerViewTest.visibility = RecyclerView.VISIBLE;
                         recyclerView.visibility = RecyclerView.INVISIBLE
                     }
-
                 }, 3)
             recyclerViewTest.visibility = View.GONE
             adapter = recyclerView.adapter as MoviesAdapter
@@ -95,13 +95,7 @@ class BookmarkFragment : Fragment() {
         }
     }
 
-    fun returnMovieObj(movie: MovieDetails): MovieDetails? {
-        var MovieIdObj: MovieDetails? =
-            movieViewModel.allMovies.find { it.movieTitle == movie.movieTitle }
-        return MovieIdObj
-    }
-
-    fun removeBookmark(movieId: Int) {
+    private fun removeBookmark(movieId: Int) {
         UserManager.userObj?.let { movieViewModel.removeBookmark(it.userId, movieId) }
     }
 }

@@ -17,14 +17,12 @@ import com.example.movieapp.ui.activity.HomeActivity
 import com.example.movieapp.ui.activity.Welcome
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor() : ViewModel() {
 
     var userData: List<UserDetails>
     var mutableUserData = MutableLiveData<List<UserDetails>>()
-    var userLiveData: LiveData<List<UserDetails>> = mutableUserData
 
     var user: UserDetails? = null
     var mutableUser = MutableLiveData<UserDetails>()
@@ -58,18 +56,6 @@ class LoginViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    suspend fun updateUser(user: UserDetails) {
-        viewModelScope.launch(Dispatchers.IO) {
-            userRepo.updateUser(user)
-        }
-    }
-
-    suspend fun getUserData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            userData = userRepo.getUserData()
-            mutableUserData.postValue(userData)
-        }
-    }
 
     fun isLogin(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -81,25 +67,16 @@ class LoginViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    suspend fun getUserId(username: String): Int {
-        var userID: Int = 0
-        viewModelScope.launch(Dispatchers.IO) {
-            userID = userRepo.getUserId(username)
-        }
-        return userID
-    }
-
     suspend fun loadBookmarks() {
-        withContext(Dispatchers.IO) {
-            UserManager.userObj?.let { bookmarkRepository.readBookmarkID(it.userId) }
-        }
+        UserManager.userObj?.let { bookmarkRepository.readBookmarkID(it.userId) }
+        //bookmarkRepository.loadBookmarks()
     }
 
     suspend fun loadGenres() {
-        moviesRepository.loadGenres()
+        moviesRepository.getGenres()
     }
 
-    fun getSharedPreference(context: Context,sharedPreferences: SharedPreferences) {
+    fun getSharedPreference(context: Context, sharedPreferences: SharedPreferences) {
         var intent: Intent? = null
         if (sharedPreferences?.getBoolean("firstrun", true) == true) {
             sharedPreferences?.edit()?.putBoolean("firstrun", false)?.apply()

@@ -44,11 +44,11 @@
             android:layout_width="25dp"
             android:layout_height="19dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/icon3"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/item_image_trend"
-            app:layout_constraintTop_toBottomOf="@+id/img_icon2_trend"
+            app:layout_constraintTop_toBottomOf="@+id/img_icon1_trend"
             tools:ignore="ExtraText" />
 
 
@@ -67,18 +67,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ExtraText" />
 
-        <ImageView
-            android:id="@+id/img_icon2_trend"
-            android:layout_width="27dp"
-            android:layout_height="19dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/icon2"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/item_image_trend"
-            app:layout_constraintTop_toBottomOf="@+id/img_icon1_trend"
-            tools:ignore="ExtraText" />
-
         <TextView
             android:id="@+id/item_imdb_trend"
             android:layout_width="0dp"
@@ -95,26 +83,13 @@
             tools:ignore="ExtraText" />
 
         <TextView
-            android:id="@+id/item_time_trend"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="12dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:includeFontPadding="false"
-            android:textColor="#7A7768"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_icon2_trend"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_icon2_trend"
-            app:layout_constraintTop_toTopOf="@+id/img_icon2_trend" />
-
-        <TextView
             android:id="@+id/item_genre_trend"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/quicksand_medium"
             android:textColor="#7A7768"
             android:textSize="14sp"
@@ -140,7 +115,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_image_trend"
             app:layout_constraintTop_toBottomOf="@+id/item_genre_trend"
-            app:layout_constraintVertical_bias="0.0" />
+            />
 
         <ImageView
             android:id="@+id/imageButton_bookmark_trend"

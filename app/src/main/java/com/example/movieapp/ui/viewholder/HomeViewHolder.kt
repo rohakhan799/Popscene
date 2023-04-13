@@ -17,8 +17,10 @@ class HomeViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         listener: (MovieDetails, ImageView) -> Unit
     ) {
         var imageVi: ImageView = imageViewSlider.findViewById(R.id.movie_slider_Img);
+        val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
+
         Glide.with(this.view)
-            .load(movie.coverImageUrl)
+            .load(POSTER_BASE_URL + movie.coverImageUrl)
             .skipMemoryCache(false)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageVi)

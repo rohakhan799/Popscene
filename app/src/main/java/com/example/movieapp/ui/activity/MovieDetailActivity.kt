@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.example.movieapp.application.MyApplication
 import com.example.movieapp.databinding.ActivityMovieDetailBinding
-import com.example.movieapp.model.GenreDetails
+import com.example.movieapp.model.BookMarkDetails
 import com.example.movieapp.model.MovieDetails
 import com.example.movieapp.model.UserManager
 import com.example.movieapp.ui.adapter.MoviesAdapter
@@ -32,7 +32,6 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         val binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         lateinit var adapterTrend: MoviesAdapter
@@ -40,25 +39,25 @@ class MovieDetailActivity : AppCompatActivity() {
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        getWindow().setFlags(
+        window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        //  movieViewModel = ViewModelProvider(this)[MovieDetailViewModel::class.java]
         lifecycleScope.launch {
             movieViewModel.init()
             movieViewModel.fetchTrendingMovies()
         }
 
-        var textViewTime: TextView = binding.timeDetails
         var textViewGenre: TextView = binding.genreDetails
         var imageView: ImageView = binding.titleImg
 
-        movie = intent.getParcelableExtra<MovieDetails>(HomeFragment.INTENT_PARCELABLE)
+        movie = intent.getParcelableExtra(HomeFragment.INTENT_PARCELABLE)
+
         if (movie != null) {
-            imageView.load(movie?.coverImageUrl)
+            imageView.load("https://image.tmdb.org/t/p/w342" + movie?.coverImageUrl)
         }
+        imageView.transitionName = movie?.movieTitle
         if (movie != null) {
             binding.titleDetails.text = movie?.movieTitle
         }
@@ -66,16 +65,11 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.imdbDetails.text = movie?.movieRating.toString()
         }
         if (movie != null) {
-            textViewTime.text = getDuration(movie!!.movieDuration)
+            textViewGenre.text = getGenre(movie!!.genreId)
         }
-        if (movie != null) {
-            textViewGenre.text = getGenre(movie!!.genres)
-        }
-
         if (movie != null) {
             binding.descDetails.text = movie?.movieDesc
         }
-        imageView.transitionName = movie?.movieTitle
 
         val myDatasetTrend = movieViewModel.movieTrend
         val recyclerViewtrend: RecyclerView =
@@ -96,11 +90,24 @@ class MovieDetailActivity : AppCompatActivity() {
                         ViewCompat.getTransitionName(image)!!
                     )
                 startActivityForResult(intent2, 1, options.toBundle())
-            }, onBookmarkClick = {}, 2)
+            }, onBookmarkClick = { movie ->
+                if (!UserManager.bookmarkList.contains(movie)) {
+                    UserManager.bookmarkList.add(movie)
+                    UserManager.bookmarkId.add(movie.movieId)
+                    addBookmark(movie.movieId)
+                } else {
+                    UserManager.bookmarkId.remove(movie.movieId)
+                    UserManager.bookmarkList.remove(movie)
+                    removeBookmark(movie.movieId)
+                }
+                movieViewModel.bookmarkLiveData.observe(this) {
+                    adapterTrend.notifyDataSetChanged()
+                }
+            }, 2)
         adapterTrend = recyclerViewtrend.adapter as MoviesAdapter
 
-        var imageButton: ImageView = findViewById(com.example.movieapp.R.id.bookmark)
-        if (UserManager.bookmarkList.contains(movie)) {
+        var imageButton: ImageView = findViewById(com.example.movieapp.R.id.bookmark_moviedetail)
+        if (movie?.let { UserManager.bookmarkId.contains(it.movieId) } == true) {
             imageButton.setImageResource(com.example.movieapp.R.drawable.bookmark2)
         } else {
             imageButton.setImageResource(com.example.movieapp.R.drawable.bookmark)
@@ -108,33 +115,44 @@ class MovieDetailActivity : AppCompatActivity() {
 
         imageButton.setOnClickListener {
             if (movie != null) {
-                if ((!UserManager.bookmarkList.contains(movie))) {
+                if ((!UserManager.bookmarkId.contains(movie?.movieId))) {
+                    UserManager.bookmarkId.add(movie!!.movieId)
                     UserManager.bookmarkList.add(movie!!)
+                    addBookmark(movie!!.movieId)
                     imageButton.setImageResource(com.example.movieapp.R.drawable.bookmark2)
                 } else {
-                    UserManager.bookmarkList.remove(movie)
+                    UserManager.bookmarkId.remove(movie!!.movieId)
+                    UserManager.bookmarkList.remove(movie!!)
+                    removeBookmark(movie!!.movieId)
                     imageButton.setImageResource(com.example.movieapp.R.drawable.bookmark)
                 }
             }
         }
-
         movieViewModel.trendLiveData.observe(this) { movies ->
             adapterTrend.updateData(movies)
         }
     }
 
-    fun getGenre(genres: List<GenreDetails>): String {
-        return genres.joinToString(", ") {
-            it.genreName
+    fun getGenre(genresId: ArrayList<String>): String {
+        val ints = genresId.map { it.toInt() }.toTypedArray()
+        val filteredGenres = UserManager.readGenre.filter { genre ->
+            ints.contains(genre.genreId)
+        }
+        val genreNames = filteredGenres.map { genre ->
+            genre.genreName
+        }
+        return genreNames.joinToString(", ")
+    }
+
+    fun addBookmark(movieId: Int) {
+        val bookmarkObj = UserManager.userObj?.let { BookMarkDetails(0, it.userId, movieId) }
+        if (bookmarkObj != null) {
+            movieViewModel.addBookmark(bookmarkObj)
         }
     }
 
-    fun getDuration(time: Long): String {
-        var movieDur: String = ""
-        val hours: Long = time / 60
-        val minutes: Long = time % 60
-        movieDur = hours.toString() + "h " + minutes.toString() + "m "
-        return movieDur
+    fun removeBookmark(movieId: Int) {
+        UserManager.userObj?.let { movieViewModel.removeBookmark(it.userId, movieId) }
     }
 
     override fun onBackPressed() {
@@ -143,7 +161,6 @@ class MovieDetailActivity : AppCompatActivity() {
         if (movie != null) {
             resultIntent.putExtra("result", movie)
             setResult(RESULT_OK, resultIntent)
-            //startActivity(resultIntent)
         }
     }
 }

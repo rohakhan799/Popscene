@@ -9,10 +9,6 @@ class UserRepository @Inject constructor(
 ) {
     companion object {
         private var mUserRepository: UserRepository? = null
-        fun getInstance(userDao: UserDao): UserRepository {
-            mUserRepository = mUserRepository ?: UserRepository(userDao)
-            return mUserRepository!!
-        }
     }
 
     suspend fun getUserData(): List<UserDetails> {

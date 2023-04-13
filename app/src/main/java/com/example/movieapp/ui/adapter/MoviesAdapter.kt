@@ -57,7 +57,7 @@ open class MoviesAdapter(
         } else if (holder is HomeViewHolder) {
             (holder as HomeViewHolder).bindView(dataset[position], listener)
         } else if (holder is BookmarkViewHolder) {
-            (holder as BookmarkViewHolder).bindView(dataset[position], listener,onBookmarkClick)
+            (holder as BookmarkViewHolder).bindView(dataset[position], listener, onBookmarkClick)
         } else {
             (holder as TrendViewHolder).bindView(dataset[position], listener, onBookmarkClick)
         }
@@ -69,11 +69,6 @@ open class MoviesAdapter(
 
     fun updateData(movie: List<MovieDetails>) {
         dataset = movie
-        notifyDataSetChanged()
-    }
-
-    fun addUser(user: UserDetails) {
-        this.userList.add(user)
         notifyDataSetChanged()
     }
 }

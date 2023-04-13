@@ -9,9 +9,9 @@ import com.example.movieapp.model.GenreDetails
 
 @Dao
 interface GenreDao {
-    @Insert(onConflict=OnConflictStrategy.IGNORE)
-    suspend fun addGenre(genre: GenreDetails)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addGenre(genre: List<GenreDetails>)
 
     @Query(value = "SELECT * FROM GenreDetails ORDER BY Id ASC ")
-    suspend fun readGenre():List<GenreDetails>
+    suspend fun readGenre(): List<GenreDetails>
 }

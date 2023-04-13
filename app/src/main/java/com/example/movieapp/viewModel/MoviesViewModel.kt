@@ -20,12 +20,12 @@ class MoviesViewModel @Inject constructor() : ViewModel() {
     var allMoviesLiveData: LiveData<List<MovieDetails>> = _allMoviesLiveData
 
     var movieTrend: List<MovieDetails>
-    var mutableDataTrend = MutableLiveData<List<MovieDetails>>()
-    var trendLiveData: LiveData<List<MovieDetails>> = mutableDataTrend
+    var _dataTrend = MutableLiveData<List<MovieDetails>>()
+    var trendLiveData: LiveData<List<MovieDetails>> = _dataTrend
 
     var movieRecommend: List<MovieDetails>
-    var mutableDataRecommend = MutableLiveData<List<MovieDetails>>()
-    var recommendLiveData: LiveData<List<MovieDetails>> = mutableDataRecommend
+    var _dataRecommend = MutableLiveData<List<MovieDetails>>()
+    var recommendLiveData: LiveData<List<MovieDetails>> = _dataRecommend
 
     var movieBookmark: ArrayList<BookMarkDetails>
     var mutableBookmark = MutableLiveData<List<BookMarkDetails>>()
@@ -51,7 +51,8 @@ class MoviesViewModel @Inject constructor() : ViewModel() {
 
     suspend fun init() {
         viewModelScope.launch {
-            movieRepo.loadGenres()
+            movieRepo.getGenres()
+            //movieRepo.updateBookmarkList()
             bookmarkRepository.loadBookmarks()
         }
     }
@@ -60,22 +61,20 @@ class MoviesViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             movieBookmark.add(bookMark)
             bookmarkRepository.addBookmark(bookMark)
-            //mutableBookmark.postValue(UserManager.userObj?.let { bookmarkRepository.getBookmark(it.userId) })
             mutableBookmark.postValue(movieBookmark)
         }
     }
 
     fun removeBookmark(userId: Int, movieId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            //movieBookmark.add(bookMark)
+        var bookmarkObj = BookMarkDetails(0, userId, movieId)
+            movieBookmark.remove(bookmarkObj)
             bookmarkRepository.removeBookmark(userId, movieId)
-            mutableBookmark.postValue(UserManager.userObj?.let { bookmarkRepository.getBookmark(it.userId) })
-        }
+            mutableBookmark.postValue(bookmarkRepository.getBookmark(userId))
     }
 
-    suspend fun fetchAllBookmarkMovies() {
+    fun fetchAllBookmarkMovies() {
         viewModelScope.launch(Dispatchers.IO) {
-            allBookmarkMovies = bookmarkRepository.getAllBookmarkMovies()
+            allBookmarkMovies = UserManager.bookmarkList
             _allBookmarkMovies.postValue(allBookmarkMovies)
         }
     }
@@ -84,22 +83,20 @@ class MoviesViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             allMovies = movieRepo.getAllMovies()
             _allMoviesLiveData.postValue(allMovies)
-            /*movieBookmark = UserManager.userObj?.let { bookmarkRepository.getBookmark(it.userId) }!!
-            mutableBookmark.postValue(movieBookmark)*/
         }
     }
 
-    suspend fun fetchRecommendedMovies() {
+    suspend fun fetchRecommendedMovies(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            movieRecommend = movieRepo.getRecommendMovies()
-            mutableDataRecommend.postValue(movieRecommend)
+            movieRecommend = movieRepo.getRecommendMovies(movieId)
+            _dataRecommend.postValue(movieRecommend)
         }
     }
 
     suspend fun fetchTrendingMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             movieTrend = movieRepo.getTrendMovies()
-            mutableDataTrend.postValue(movieTrend)
+            _dataTrend.postValue(movieTrend)
         }
     }
 }

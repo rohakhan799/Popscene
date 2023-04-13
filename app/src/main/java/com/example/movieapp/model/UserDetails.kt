@@ -15,4 +15,6 @@ data class UserDetails(
     @ColumnInfo(name = "UserName") var userName: String,
     @ColumnInfo(name = "Email") var userEmail: String,
     @ColumnInfo(name = "Password") var userPassword: String,
-) : Parcelable
+    @ColumnInfo(name = "DOB") var dateOfBirth: String,
+    @ColumnInfo(name = "Gender") var gender: String
+    ) : Parcelable
